@@ -5,6 +5,7 @@ module.exports = {
   },
   testMatch: ['<rootDir>/test/**/*.test.ts'],
   testEnvironment: 'node',
+  testResultsProcessor: 'jest-sonar-reporter',
   restoreMocks: true,
   clearMocks: true,
   resetMocks: true,
