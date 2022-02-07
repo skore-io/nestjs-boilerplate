@@ -1,5 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql'
-import { CurrentUser, IsUser, User } from '@nest-firebase/security'
+import { CurrentUser, IsUser, User } from '@skore-io/auth'
 import { Logger } from '@nestjs/common'
 import { FindService } from 'src/foo/service'
 import { FindArgs, FooDto } from 'src/foo/dto'

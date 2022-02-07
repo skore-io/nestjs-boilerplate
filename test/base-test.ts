@@ -4,7 +4,7 @@ import { ExecutionContext, INestApplication, Type } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { AppModule } from 'src/app.module'
 import { readFileSync } from 'fs'
-import { UserGuard } from '@nest-firebase/security'
+import { UserGuard } from '@skore-io/auth'
 
 export abstract class BaseTest {
   static app: INestApplication
@@ -18,7 +18,7 @@ export abstract class BaseTest {
       .useValue({
         canActivate: (ctx: ExecutionContext) => {
           const graphqlReq = ctx.getArgByIndex(2).req
-          const req = !!graphqlReq ? graphqlReq : ctx.switchToHttp().getRequest()
+          const req = graphqlReq || ctx.switchToHttp().getRequest()
 
           req.user = JSON.parse(readFileSync('test/fixture/user.fixture.json', 'utf-8'))
 

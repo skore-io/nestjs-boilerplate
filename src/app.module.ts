@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { SecurityModule } from '@nest-firebase/security'
+import { AuthModule } from '@skore-io/auth'
 import { FooModule } from 'src/foo/foo.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { GraphQLError } from 'graphql'
@@ -21,7 +21,7 @@ const isProduction = process.env.NODE_ENV === 'production'
         message: error.message,
       }),
     }),
-    SecurityModule,
+    AuthModule,
     FooModule,
   ],
   providers: [],
