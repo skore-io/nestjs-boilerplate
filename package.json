@@ -9,13 +9,13 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "NODE_PATH=. nest start --watch",
-    "start:debug": "NODE_PATH=. nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint --ext .js,.ts ./",
-    "test": "NODE_PATH=. jest --forceExit --detectOpenHandles",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "nest start",
+    "start:debug": "NODE_PATH=. nest start --debug --watch",
+    "start:dev": "NODE_PATH=. nest start --watch",
+    "start:prod": "node dist/main",
+    "test": "NODE_PATH=. jest --forceExit --detectOpenHandles"
   },
   "dependencies": {
     "@nestjs/axios": "^0.0.5",

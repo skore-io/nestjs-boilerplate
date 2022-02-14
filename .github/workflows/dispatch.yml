@@ -1,0 +1,58 @@
+name: Manual deployment to staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)
+        required: false
+env:
+  ECR_REPOSITORY: nestjs-boilerplate
+
+jobs:
+  build_and_deploy:
+    name: Build and deploy to staging
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Branch name
+        run: echo Running on branch ${GITHUB_REF#refs/*/}
+
+      - name: Fetch git history
+        run: git fetch --prune --unshallow
+
+      - name: Add RELEASE env property with commit short sha
+        run: echo "RELEASE=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$RELEASE .
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$RELEASE
+
+      - name: Set k8s credentials
+        run: echo "${{ secrets.K8S_EKS_DEV }}" > kube_config
+
+      - name: Deploy application
+        run: |-
+          sed "s|##IMAGE##|${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$RELEASE|g" .k8s/deployment_web.tpl.yaml | kubectl apply -f -
+          kubectl apply -f .k8s/service.yaml
+          sed "s|##APP_URL##|nestjs-boilerplate.skore.dev|g" .k8s/nginx-ingress.tpl.yaml | sed "s|##TLS_SECRET_NAME##|nestjs-boilerplate-tls|g" | kubectl apply -f -
+        env:
+          KUBECONFIG: kube_config

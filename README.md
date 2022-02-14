@@ -8,9 +8,12 @@ What things you need to install the software and how to install them.
 
 - [Git](https://git-scm.com/)
 - [NPM](https://www.npmjs.com/)
-- [Node](https://nodejs.org/en/) `>=16.0.0`
+- [Node](https://nodejs.org/en/) `>=16.0.0` (We recommend you install it using [NVM](https://github.com/nvm-sh/nvm))
+- [Docker Compose](https://docs.docker.com/compose/)
 
 ## Installation
+
+This project uses a GitHub Package and to install dependencies it's necessary to generate a [personal-access-token](https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and add a new line into `.npmrc` with the content: `//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN_HERE`.
 
 ```bash
 $ nvm use && npm install
@@ -21,9 +24,6 @@ $ nvm use && npm install
 ```bash
 $ docker-compose up -d
 
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
 ```
@@ -31,6 +31,8 @@ $ npm run start:dev
 ## Test
 
 ```bash
+$ nvm use
+
 # unit tests
 $ npm run test
 ```
@@ -59,11 +61,15 @@ The project has an accurate process to send modifications to production. It is *
 3. Once the modifications pass QA tests in staging, checkout to `master` branch, and pull the up-to-date `develop` branch to it;
 
 ```
-$ git pull origin develop
 $ git checkout master
-$ git merge develop
+$ git pull origin master
+$ git pull origin develop --rebase
 ```
 
 4. Finally, push the modifications to `master` branch. It will deploy the application in production environment;
 
 **IMPORTANT:** Both workflows `On push develop` and `On push master` have a step which will add commits to the project with release information. Therefore, it is crucial to wait for them to finish in order to move to the next step.
+
+## APIs
+
+For mutations/queries that require authorization the client should send a Bearer authorization header e.g., `'Authorization: Bearer JWT_TOKEN'`.

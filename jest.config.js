@@ -11,7 +11,7 @@ module.exports = {
   resetMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['src/**/{!(app.module|index|main),}.ts'],
+  collectCoverageFrom: ['src/**/{!(*.module|index|main),}.ts'],
   coveragePathIgnorePatterns: ['/node_modules/', '/test/', '/dto/'],
   coverageReporters: ['lcovonly', 'text'],
   coverageThreshold: {
