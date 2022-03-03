@@ -4,11 +4,8 @@
     "source.fixAll.eslint": true
   },
   "eslint.validate": ["json"],
-  "[javascript]": {
+  "eslint.enable": true,
+  "[javascript, typescript]": {
     "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  }
 }

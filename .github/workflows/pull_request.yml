@@ -56,8 +56,10 @@ jobs:
       - name: Dependencies
         run: npm install
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run lint
+        run: npm run lint
 
       - name: Setup Test Dependencies
         run: |

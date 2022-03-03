@@ -13,7 +13,9 @@ What things you need to install the software and how to install them.
 
 ## Installation
 
-This project uses a GitHub Package and to install dependencies it's necessary to generate a [personal-access-token](https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and add a new line into `.npmrc` with the content: `//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN_HERE`.
+This project uses a GitHub Package and to install dependencies it's necessary to generate a [personal-access-token](https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with write/read permission(s) and add a new line into `.npmrc` with the content: `//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN_HERE`.
+
+**IMPORTANT:** Don't commit this token!
 
 ```bash
 $ nvm use && npm install

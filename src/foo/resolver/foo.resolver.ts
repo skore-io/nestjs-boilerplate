@@ -4,7 +4,7 @@ import { Logger } from '@nestjs/common'
 import { FindService } from 'src/foo/service'
 import { FindArgs, FooDto } from 'src/foo/dto'
 
-@Resolver(() => 'FooResolver')
+@Resolver()
 export class FooResolver {
   private readonly logger = new Logger(FooResolver.name)
 
