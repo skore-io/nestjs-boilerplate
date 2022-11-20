@@ -11,29 +11,49 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "ignorePatterns": ["coverage/", "dist", "node_modules/", "package-lock.json", "tsconfig.json"],
+  "ignorePatterns": [
+    "coverage/",
+    "dist",
+    "node_modules/",
+    "package-lock.json",
+    "tsconfig.json"
+  ],
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
     "project": "./tsconfig.json",
     "tsconfigRootDir": "."
   },
-  "plugins": ["json-format"],
+  "plugins": [
+    "json-format"
+  ],
   "rules": {
     "no-console": "warn",
     "no-return-await": "error",
     "@typescript-eslint/prefer-readonly": "error",
-    "@typescript-eslint/naming-convention": ["error", {
-      "selector": ["classProperty"],
-      "format": ["camelCase", "UPPER_CASE"]
-    }],
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": [
+          "classProperty"
+        ],
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ]
+      }
+    ],
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off"
   },
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "."]
+        "moduleDirectory": [
+          "node_modules",
+          "."
+        ]
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "nestjs-boilerplate",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "private": true,
   "description": "",
   "license": "UNLICENSED",
@@ -15,7 +15,10 @@
     "start:debug": "NODE_PATH=. nest start --debug --watch",
     "start:dev": "NODE_PATH=. nest start --watch",
     "start:prod": "node dist/main",
-    "test": "NODE_PATH=. jest --forceExit --detectOpenHandles"
+    "test": "NODE_PATH=. jest --forceExit --detectOpenHandles",
+    "test:unit": "NODE_PATH=. jest --config jest.config.unit.js --detectOpenHandles --runInBand",
+    "test:int": "NODE_PATH=. jest --config jest.config.integration.js --detectOpenHandles --runInBand",
+    "test:e2e": "NODE_PATH=. jest --config jest.config.e2e.js  --runInBand --forceExit"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.6",
