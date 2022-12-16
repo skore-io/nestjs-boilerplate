@@ -17,6 +17,12 @@ export class FooDto {
   updatedAt: number
 
   static toClass(deal: unknown): FooDto {
-    return plainToClass(FooDto, deal, { excludeExtraneousValues: true })
+    console.log({ deal })
+
+    const test = plainToClass(this, deal, {
+      excludeExtraneousValues: true,
+    })
+
+    return test
   }
 }

@@ -1,11 +1,15 @@
+import { Expose } from 'class-transformer'
+
 export class FooEntity {
-  id: number
+  id: string
 
-  createdAt: Date
+  @Expose({ name: 'created_at' })
+  createdAt: number
 
-  updatedAt: Date
+  @Expose({ name: 'updated_at' })
+  updatedAt: number
 
-  constructor(props) {
+  constructor(props: Partial<FooEntity>) {
     Object.assign(this, props)
   }
 }

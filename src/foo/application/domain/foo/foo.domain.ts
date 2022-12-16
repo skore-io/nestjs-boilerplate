@@ -1,22 +1,19 @@
-import { classToPlain, Expose, plainToClass, Transform } from 'class-transformer'
+import { FooError } from 'src/foo/application/error'
 
 export class FooDomain {
-  @Expose()
-  id: number
+  id: string
 
-  @Expose({ name: 'created_at' })
-  @Transform(({ value }) => value || Date.now())
   createdAt: number
 
-  @Expose({ name: 'updated_at' })
-  @Transform(({ value }) => value || Date.now())
   updatedAt: number
 
-  toJson(): object {
-    return classToPlain(this)
+  constructor(props: Partial<FooDomain>) {
+    Object.assign(this, props)
   }
 
-  static toClass(foo: unknown): FooDomain {
-    return plainToClass(FooDomain, foo, { excludeExtraneousValues: true })
+  validateDateToConsult(dateCurrent: number): void {
+    if (this.updatedAt === dateCurrent) {
+      throw FooError.FOO_NOT_FOUND
+    }
   }
 }

@@ -15,6 +15,6 @@ export class FooResolver {
 
     const foo = await this.findUseCase.perform(args.id)
 
-    return FooDto.toClass(foo.toJson())
+    return FooDto.toClass(foo)
   }
 }

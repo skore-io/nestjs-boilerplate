@@ -1,7 +1,7 @@
-# Service
+# Use Case
 
-This directory contains the Services files.
-The service layer is responsible for delivering data from the other layer as repositories, clients and other infrastructure solutions.
+This directory contains the Use case files.
+The use case encapsulates the application's business logic, controlling transactions and coordinating the implementation of operations.
 
 ---
 

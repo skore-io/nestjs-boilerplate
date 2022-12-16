@@ -1,19 +1,20 @@
 import { suite, test } from '@testdeck/jest'
 import { FooDomain } from 'src/foo/application/domain'
 import { FooError } from 'src/foo/application/error'
-import { IFindService } from 'src/foo/application/port'
+import { IFooService } from 'src/foo/application/port'
 import { FindUseCase } from 'src/foo/application/use-case'
 
 @suite('[FooModule] Find Use Case')
 export class FindServiceTest {
-  private findService: Partial<IFindService>
+  private findService: Partial<IFooService>
   private fooDomain: Partial<FooDomain>
 
   async before() {
     this.fooDomain = {
-      id: 1,
-      createdAt: 59,
-      updatedAt: 89,
+      id: '1',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      validateDateToConsult: jest.fn().mockResolvedValue(undefined),
     }
 
     this.findService = {
@@ -34,7 +35,7 @@ export class FindServiceTest {
 
   @test
   async 'Should return error foo id required'() {
-    const idFake = 'WITHOUT_ID'
+    const idFake = 'TEST'
 
     //@ts-ignore
     const findUseCase = new FindUseCase(this.findService)

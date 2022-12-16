@@ -2,7 +2,7 @@ import { suite, test } from '@testdeck/jest'
 import { FooError } from 'src/foo/application/error'
 import { IFooRepository } from 'src/foo/external/database/repository'
 import { FooEntity } from 'src/foo/external/database/entity'
-import { FindService } from 'src/foo/external/service'
+import { FooService } from 'src/foo/external/service'
 import { FooDomain } from 'src/foo/application/domain'
 
 @suite('[FooModule] Find Service')
@@ -14,9 +14,9 @@ export class FindServiceTest {
     jest.useFakeTimers().setSystemTime(new Date())
 
     this.fooEntity = {
-      id: 1,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      id: '1',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     }
 
     this.fooRepository = {
@@ -28,11 +28,11 @@ export class FindServiceTest {
     const idFake = '2'
 
     //@ts-ignore
-    const findUseCase = new FindService(this.fooRepository)
+    const service = new FooService(this.fooRepository)
 
-    const result = await findUseCase.findFooById(idFake)
+    const result = await service.findFooById(idFake)
 
-    expect(result).toEqual(FooDomain.toClass(this.fooEntity))
+    expect(result).toEqual(new FooDomain(this.fooEntity))
   }
 
   @test
@@ -42,10 +42,8 @@ export class FindServiceTest {
     this.fooRepository.findById = jest.fn().mockResolvedValue(null)
 
     //@ts-ignore
-    const findUseCase = new FindService(this.fooRepository)
+    const service = new FooService(this.fooRepository)
 
-    await expect(findUseCase.findFooById(idFake)).rejects.toThrowError(
-      FooError.FOO_NOT_FOUND.message,
-    )
+    await expect(service.findFooById(idFake)).rejects.toThrowError(FooError.FOO_NOT_FOUND.message)
   }
 }

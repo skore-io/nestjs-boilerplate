@@ -5,5 +5,5 @@ export class FooError {
     'FOO_ID_REQUIRED',
   )
 
-  static FOO_NOT_FOUND: UnprocessableEntityException = new NotFoundException('FOO_ID_REQUIRED')
+  static FOO_NOT_FOUND: UnprocessableEntityException = new NotFoundException('FOO_NOT_FOUND')
 }
