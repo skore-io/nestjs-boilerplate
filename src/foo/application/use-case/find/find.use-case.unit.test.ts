@@ -1,7 +1,7 @@
 import { suite, test } from '@testdeck/jest'
 import { FooDomain } from 'src/foo/application/domain'
 import { FooError } from 'src/foo/application/error'
-import { IFooService } from 'src/foo/application/port'
+import { IFooService } from 'src/foo/application/contract'
 import { FindUseCase } from 'src/foo/application/use-case'
 
 @suite('[FooModule] Find Use Case')

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { FooDomain } from 'src/foo/application/domain'
 import { FooError } from 'src/foo/application/error'
-import { IFooService } from 'src/foo/application/port'
+import { IFooService } from 'src/foo/application/contract'
 import { IFooRepository } from 'src/foo/external/database/repository'
 
 @Injectable()
