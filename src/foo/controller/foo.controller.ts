@@ -1,6 +1,6 @@
-import { FindFooOutput } from './types'
-import { FindService } from '../service'
+import { FindService } from 'src/foo/service'
 import { CurrentUser, User } from '@skore-io/auth'
+import { FindFooOutput } from 'src/foo/controller/types'
 import { Controller, Get, Logger, Param } from '@nestjs/common'
 
 @Controller('/foo')
