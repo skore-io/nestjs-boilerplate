@@ -1,4 +1,4 @@
-import { classToPlain, Expose, plainToClass, Transform } from 'class-transformer'
+import { Expose, instanceToPlain, plainToClass, Transform } from 'class-transformer'
 
 export class Foo {
   @Expose()
@@ -13,7 +13,7 @@ export class Foo {
   updatedAt: number
 
   toJson(): object {
-    return classToPlain(this)
+    return instanceToPlain(this)
   }
 
   static toClass(foo: unknown): Foo {

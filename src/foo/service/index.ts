@@ -1,1 +1,1 @@
-export * from './find.service'
+export * from './find-foo.service'
