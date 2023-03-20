@@ -1,4 +1,4 @@
-import { FindFooOutput } from './types'
+import { FindFooOutput } from './type'
 import { FooError } from 'src/foo/error'
 import { Injectable } from '@nestjs/common'
 import { FooRepository } from 'src/foo/repository'

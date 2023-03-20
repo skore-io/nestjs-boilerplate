@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common'
 import { FindService } from 'src/foo/service'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { CurrentUser, IsUser, User } from '@skore-io/auth'
-import { FindFooInput, FindFooOutput } from 'src/foo/resolver/types'
+import { FindFooInput, FindFooOutput } from 'src/foo/resolver/type'
 
 @Resolver()
 export class FooResolver {
