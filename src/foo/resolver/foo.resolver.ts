@@ -1,8 +1,8 @@
-import { Args, Query, Resolver } from '@nestjs/graphql'
-import { CurrentUser, IsUser, User } from '@skore-io/auth'
 import { Logger } from '@nestjs/common'
 import { FindService } from 'src/foo/service'
-import { FindArgs, FooDto } from 'src/foo/dto'
+import { Args, Query, Resolver } from '@nestjs/graphql'
+import { CurrentUser, IsUser, User } from '@skore-io/auth'
+import { FindFooInput, FindFooOutput } from 'src/foo/resolver/type'
 
 @Resolver()
 export class FooResolver {
@@ -11,12 +11,12 @@ export class FooResolver {
   constructor(private readonly findService: FindService) {}
 
   @IsUser()
-  @Query(() => FooDto)
-  async find(@Args() args: FindArgs, @CurrentUser() user: User): Promise<FooDto> {
+  @Query(() => FindFooOutput)
+  async find(@Args() input: FindFooInput, @CurrentUser() user: User): Promise<FindFooOutput> {
     this.logger.debug(`Performing query for user=${user.id}`)
 
-    const foo = await this.findService.perform(args.id)
+    const foo = await this.findService.perform(input.id)
 
-    return FooDto.toClass(foo.toJson())
+    return FindFooOutput.toClass(foo.toJson())
   }
 }
