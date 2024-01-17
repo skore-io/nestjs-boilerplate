@@ -1,5 +1,6 @@
 import 'reflect-metadata'
-import * as supertest from 'supertest'
+import supertest from 'supertest'
+import TestAgent from 'supertest/lib/agent'
 import { ExecutionContext, INestApplication, Type } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { AppModule } from 'src/app.module'
@@ -39,7 +40,7 @@ export abstract class BaseTest {
     return BaseTest.app.get(type)
   }
 
-  server(): supertest.SuperTest<supertest.Test> {
+  server(): TestAgent {
     return supertest(BaseTest.httpServer)
   }
 
