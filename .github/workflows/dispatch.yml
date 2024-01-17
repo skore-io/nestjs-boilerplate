@@ -1,13 +1,6 @@
 name: Manual deployment to staging
 
-on:
-  workflow_dispatch:
-    inputs:
-      git-ref:
-        description: Git Ref (Optional)
-        required: false
-env:
-  ECR_REPOSITORY: nestjs-boilerplate
+on: workflow_dispatch
 
 jobs:
   build_and_deploy:
@@ -17,42 +10,27 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Branch name
         run: echo Running on branch ${GITHUB_REF#refs/*/}
 
-      - name: Fetch git history
-        run: git fetch --prune --unshallow
-
-      - name: Add RELEASE env property with commit short sha
-        run: echo "RELEASE=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        run: |
-          docker build --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$RELEASE .
-          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$RELEASE
-
-      - name: Set k8s credentials
-        run: echo "${{ secrets.K8S_EKS_DEV }}" > kube_config
-
       - name: Deploy application
-        run: |-
-          sed "s|##IMAGE##|${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$RELEASE|g" .k8s/deployment_web.tpl.yaml | kubectl apply -f -
-          kubectl apply -f .k8s/service.yaml
-          sed "s|##APP_URL##|nestjs-boilerplate.skore.dev|g" .k8s/nginx-ingress.tpl.yaml | sed "s|##TLS_SECRET_NAME##|nestjs-boilerplate-tls|g" | kubectl apply -f -
-        env:
-          KUBECONFIG: kube_config
+        uses: skore-io/git-actions/k8s@main
+        with:
+          ecr_repository: boilerplate
+          k8s_credential: ${{ secrets.K8S_EKS_AMBIENTE_DEV }}
+          service_base_url: boilerplate.learningrocks.info
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          aws_access_key_id: ${{ secrets.AWS_KEY_ID_DEV }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_DEV }}
+          tls_secret_name: boilerplate-tls
+          k8s_replicas: 1
+          subnets: subnet-xxx, subnet-yyy
+          certificate_arn: arn:aws:acm:us-east-1:xxx
+          limit_cpu: ${{ vars.K8S_DEV_LIMIT_CPU }}
+          limit_memory: ${{ vars.K8S_DEV_LIMIT_MEMORY }}
+          request_cpu: ${{ vars.K8S_DEV_REQUEST_CPU }}
+          request_memory: ${{ vars.K8S_DEV_REQUEST_MEMORY }}

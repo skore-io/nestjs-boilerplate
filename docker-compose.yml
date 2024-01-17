@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:11.18-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=content
+      - POSTGRES_PASSWORD=postgres
+      - DATABASE_URL=postgres://postgres:postgres@localhost:5432/content
+
+  redis:
+    command: redis-server --requirepass redispassword
+    image: redis:7.2.3-alpine
+    ports:
+      - 6379:6379
