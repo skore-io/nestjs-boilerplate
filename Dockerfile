@@ -1,4 +1,4 @@
-FROM node:20-alpine as dev
+FROM node:22-alpine as dev
 
 ARG GITHUB_TOKEN
 
@@ -18,7 +18,7 @@ RUN npm run build
 
 RUN npm prune --production
 
-FROM node:20-alpine as production
+FROM node:22-alpine as production
 
 WORKDIR /usr/src/app
 
