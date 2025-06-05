@@ -1,6 +1,6 @@
 ## Description
 
-An incredible description 🚀
+The project serves as a boilerplate for developing applications with NestJS, providing a structured setup with essential configurations and dependencies.
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@ What things you need to install the software and how to install them.
 
 - [Git](https://git-scm.com/)
 - [NPM](https://www.npmjs.com/)
-- [Node](https://nodejs.org/en/) `>=20.11.0` (We recommend you install it using [NVM](https://github.com/nvm-sh/nvm))
+- [Node](https://nodejs.org/en/) `>=22.16.0` (We recommend you install it using [NVM](https://github.com/nvm-sh/nvm))
 - [Docker Compose](https://docs.docker.com/compose/)
 
 ## Installation
@@ -24,7 +24,7 @@ $ nvm use && npm install
 ## Running the app
 
 ```bash
-$ docker-compose up -d
+$ docker compose up -d
 
 # watch mode
 $ npm run start:dev
